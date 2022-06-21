@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<div class="list">
+    {% for quiz in data %}
+<div class="card">
+    <h2>{{quiz}}</h2>
+    <p>@{{quiz.creator}}</p>
+    <p><strong>points:</strong>{{quiz.question_point}}</p>
+    <p><strong>attempts:</strong>{{quiz.attempts_quiz}}</p>
+    <a href="{% url 'validate' quiz.pk %}">do you want to do it?</a>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

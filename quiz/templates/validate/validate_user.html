@@ -1,0 +1,28 @@
+
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    <p>¿do you want to do the quiz?</p>
+<input type="radio" name="response" id="yes" value="yes">
+<label for="yes">Yes</label>
+<input type="radio" name="response" id="no" value="no">
+<label for="no">No</label>
+
+<button type="submit">Response</button>
+    
+</form>
+{% else %}
+    <p>por favor logueese:</p>
+    <a href="http://localhost:8000/admin/">Aqui</a>
+{% endif %}
+
+
+
+{%endblock%}

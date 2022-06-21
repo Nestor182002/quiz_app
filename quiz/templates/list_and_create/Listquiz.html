@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block style%}
+<style>
+    .list{
+        display: flex;
+        width: 100%;
+    }
+    .list .card{
+        margin: 50px;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="list">
+    {% for quiz in data %}
+<div class="card">
+    <h2>{{quiz}}</h2>
+    <p>@{{quiz.creator}}</p>
+    <p><strong>points:</strong>{{quiz.question_point}}</p>
+    <p><strong>attempts:</strong>{{quiz.attempts_quiz}}</p>
+    <a href="{% url 'detailquiz' quiz.pk %}" >details</a>
+</div>
+{% endfor %}
+
+</div>
+<a href="{% url 'create_quiz' %}" >create</a>
+
+
+{% endblock %}
+
+    
+
+

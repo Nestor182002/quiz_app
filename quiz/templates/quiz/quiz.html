@@ -1,0 +1,77 @@
+{% extends "base.html" %} 
+{% block style %}
+<style>
+    div {
+        margin: 10px;
+    }
+</style>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<p>Una vez envias el quiz no podras responder las demas preguntas,asegurate de marcar todas.</p>
+<div>
+    {% csrf_token %} 
+    {% for quiz in object_list %} 
+    <input type="hidden" value={{quiz.id}} id="quiz">
+    {% for question in quiz.question_list %}
+    <form>
+        {{question}} 
+        {% for response in question.answers_list %}
+        <input class="response" type="radio" value={{response.id}} name={{quiz.id}}>
+        <label>{{response}}</label> 
+        {% endfor %}
+    </form>
+    {% endfor %}
+     {% endfor %}
+    <button type="submit" id="submit">Submit</button>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+button= document.getElementById('submit');
+csrf=document.getElementsByName('csrfmiddlewaretoken')
+const checks=[...document.getElementsByClassName('response')]
+const quiz=document.getElementById('quiz').value
+
+button.addEventListener('click',(e)=>{
+ data={
+    csrfmiddlewaretoken: '{{ csrf_token }}',
+ }
+ checks.forEach(element => {
+    if(element.checked){
+        data[element.value]=element.value
+    }
+});
+ 
+// -----------------
+
+$.ajax({
+ type:"POST", 
+ url:`http://localhost:8000/results/${quiz}/`, 
+ data:data,
+ success:function(data){ 
+    if(data.status == 'error'){
+        alert("por favor verifica marcar todas las preguntas.")
+      }else{
+        location.reload();
+        location.href = `http://localhost:8000/positions/${quiz}`;
+      }
+  },
+
+})
+
+// ------------------
+
+
+})
+
+
+</script>
+{% endblock %}

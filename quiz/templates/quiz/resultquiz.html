@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block style%}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% for quiz in object_list %} 
+<div>
+
+    <h2>{{quiz.competitor}}</h2>
+    <div>
+        <p>{{quiz.total_points}}</p>
+    </div>
+</div>
+ {% endfor %}
+
+
+{% endblock %}
